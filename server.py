@@ -60,22 +60,22 @@ def read_file(connection):
 
     deleted_ap = sorted(initial_access_point_keys - access_point_keys)
     for ap in deleted_ap:
-        connection.send(f'{ap} is removed from the list'.encode())
+        connection.send(f'{ap} is removed from the list \n'.encode())
 
     added_ap = sorted(access_point_keys - initial_access_point_keys)
     for ap in added_ap:
         ap_data = access_points[ap]
         connection.send(
-            f'{ap} is added to the list with SNR {ap_data["snr"]} and CHANNEL {ap_data["channel"]}'.encode())
+            f'{ap} is added to the list with SNR {ap_data["snr"]} and CHANNEL {ap_data["channel"]} \n'.encode())
 
     updated_ap = sorted(initial_access_point_keys & access_point_keys)
     for ap in updated_ap:
         prev_ap = initial_access_points[ap]
         curr_ap = access_points[ap]
         if prev_ap["snr"] != curr_ap["snr"]:
-            connection.send(f'{ap}\'s SNR has from {prev_ap["snr"]} to {curr_ap["snr"]}'.encode())
+            connection.send(f'{ap}\'s SNR has from {prev_ap["snr"]} to {curr_ap["snr"]}\n'.encode())
         if prev_ap["channel"] != curr_ap["channel"]:
-            connection.send(f'{ap}\'s Channel has from {prev_ap["channel"]} to {curr_ap["channel"]}'.encode())
+            connection.send(f'{ap}\'s Channel has from {prev_ap["channel"]} to {curr_ap["channel"]}\n'.encode())
 
     initial_access_points.clear()
     initial_access_points = access_points  # Update current data for next iteration
